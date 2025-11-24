@@ -9,7 +9,7 @@ import {
 } from 'firebase/auth';
 import { 
   ChefHat, User, Plus, Minus, Trash2, 
-  Clock, DollarSign, RefreshCw, LayoutDashboard,
+  RefreshCw, LayoutDashboard,
   CheckSquare, ArrowRightCircle, X, Eye, Image as ImageIcon, AlertTriangle
 } from 'lucide-react';
 
@@ -41,7 +41,6 @@ const MENU_ITEMS = [
   { id: 8, name: 'Entrecot', price: 18.00, category: 'Principal' },
   { id: 9, name: 'Tarta de Queso', price: 5.50, category: 'Postres' },
   { id: 10, name: 'Café', price: 1.50, category: 'Bebidas' },
-  { id: 11, name: 'Caña', price: 1.80, category: 'Bebidas' }
 ];
 
 const ORDER_STATUS = {
@@ -58,7 +57,7 @@ const OrderDetailModal = ({ order, onClose, onCloseOrder }) => {
   if (!order) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
       <div className="bg-white w-full max-w-2xl rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header Modal */}
         <div className="bg-blue-600 p-4 flex justify-between items-center text-white">
@@ -74,37 +73,37 @@ const OrderDetailModal = ({ order, onClose, onCloseOrder }) => {
         </div>
 
         {/* Body Scrollable */}
-        <div className="p-6 overflow-y-auto flex-1">
+        <div className="p-6 overflow-y-auto flex-1 bg-white">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b-2 border-gray-200 text-gray-500 text-sm uppercase">
-                <th className="py-2 text-gray-700">Cant.</th>
-                <th className="py-2 text-gray-700">Producto</th>
-                <th className="py-2 text-right text-gray-700">P. Unit</th>
-                <th className="py-2 text-right text-gray-700">Total</th>
+              <tr className="border-b-2 border-gray-300 text-black text-sm uppercase font-bold">
+                <th className="py-2">Cant.</th>
+                <th className="py-2">Producto</th>
+                <th className="py-2 text-right">P. Unit</th>
+                <th className="py-2 text-right">Total</th>
               </tr>
             </thead>
-            <tbody className="text-lg">
+            <tbody className="text-lg text-black">
               {order.items.map((item, idx) => (
-                <tr key={idx} className="border-b border-gray-100">
-                  <td className="py-3 font-bold text-gray-900">{item.qty}</td>
-                  <td className="py-3 text-gray-900">{item.name}</td>
-                  <td className="py-3 text-right text-gray-600">{item.price.toFixed(2)}€</td>
-                  <td className="py-3 text-right font-medium text-gray-900">{(item.price * item.qty).toFixed(2)}€</td>
+                <tr key={idx} className="border-b border-gray-200">
+                  <td className="py-3 font-bold">{item.qty}</td>
+                  <td className="py-3">{item.name}</td>
+                  <td className="py-3 text-right">{item.price.toFixed(2)}€</td>
+                  <td className="py-3 text-right font-medium">{(item.price * item.qty).toFixed(2)}€</td>
                 </tr>
               ))}
             </tbody>
           </table>
           
-          <div className="mt-6 flex justify-end items-center gap-4 pt-4 border-t-2 border-gray-100">
-             <span className="text-gray-600 text-lg uppercase font-bold">Total Comanda:</span>
+          <div className="mt-6 flex justify-end items-center gap-4 pt-4 border-t-2 border-gray-300">
+             <span className="text-black text-lg uppercase font-bold">Total Comanda:</span>
              <span className="text-4xl font-bold text-blue-600">{order.total?.toFixed(2)}€</span>
           </div>
         </div>
 
         {/* Footer Actions */}
-        <div className="p-4 bg-gray-50 border-t border-gray-200 flex justify-between items-center">
-           <span className={`px-3 py-1 rounded-full text-sm font-bold uppercase ${
+        <div className="p-4 bg-gray-100 border-t border-gray-300 flex justify-between items-center">
+           <span className={`px-3 py-1 rounded-full text-sm font-bold uppercase border border-gray-300 ${
               order.status === ORDER_STATUS.PENDING ? 'bg-yellow-100 text-yellow-800' : 
               order.status === ORDER_STATUS.READY ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-800'
             }`}>
@@ -112,7 +111,7 @@ const OrderDetailModal = ({ order, onClose, onCloseOrder }) => {
            </span>
            <button 
              onClick={() => onCloseOrder(order.id)}
-             className="bg-gray-900 hover:bg-black text-white px-6 py-3 rounded-lg font-bold shadow-lg flex items-center gap-2 transform active:scale-95 transition-all"
+             className="bg-black text-white px-6 py-3 rounded-lg font-bold shadow-lg flex items-center gap-2 active:scale-95 transition-all"
            >
              <CheckSquare size={20}/> YA ANOTADO EN PC (CERRAR)
            </button>
@@ -125,7 +124,9 @@ const OrderDetailModal = ({ order, onClose, onCloseOrder }) => {
 const RoleSelector = ({ onSelectRole }) => (
   <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 p-4">
     <div className="max-w-md w-full bg-gray-800 rounded-xl shadow-2xl p-8 border border-gray-700">
-      <h1 className="text-3xl font-bold text-white text-center mb-8">Restaurante Marcelino</h1>
+      <h1 className="text-3xl font-bold text-white text-center mb-2">Restaurante Marcelino</h1>
+      <div className="text-center mb-8 text-red-400 font-mono font-bold text-sm border border-red-500 inline-block px-2 rounded">v2.0 - VERSIÓN NUEVA</div>
+      
       <div className="space-y-4">
         <button onClick={() => onSelectRole('waiter')} className="w-full flex items-center justify-center gap-3 p-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold text-lg">
           <User size={24} /> Camarero
@@ -203,37 +204,40 @@ const WaiterInterface = ({ user }) => {
   return (
     <div className="h-screen flex flex-col bg-gray-50">
       <div className="bg-blue-600 text-white p-4 flex justify-between items-center shadow-md">
-        <h2 className="font-bold text-lg">Camarero</h2>
+        <div className="flex flex-col">
+          <h2 className="font-bold text-lg">Camarero</h2>
+          <span className="text-xs font-mono bg-red-500 px-1 rounded w-fit">v2.0</span>
+        </div>
         <div className="flex gap-2">
           <button onClick={() => setActiveTab('menu')} className={`px-3 py-1 rounded ${activeTab === 'menu' ? 'bg-white text-blue-600' : 'bg-blue-500'}`}>Carta</button>
           <button onClick={() => setActiveTab('active')} className={`px-3 py-1 rounded ${activeTab === 'active' ? 'bg-white text-blue-600' : 'bg-blue-500'}`}>Activas ({activeOrders.length})</button>
         </div>
       </div>
 
-      <div className="flex-1 overflow-auto p-4 pb-48 md:pb-32">
+      <div className="flex-1 overflow-auto p-4 pb-48 md:pb-32 bg-gray-100">
         {activeTab === 'menu' ? (
           <>
             <div className="mb-4">
-              <input type="number" value={table} onChange={(e) => setTable(e.target.value)} placeholder="Nº Mesa" className="w-full p-3 border rounded-lg text-lg text-black outline-none focus:ring-2 focus:ring-blue-500" />
+              <input type="number" value={table} onChange={(e) => setTable(e.target.value)} placeholder="Nº Mesa" className="w-full p-3 border border-gray-300 rounded-lg text-lg text-black bg-white outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
             <div className="grid grid-cols-1 gap-3 mb-6">
               {MENU_ITEMS.map(item => (
                 <button 
                   key={item.id} 
                   onClick={() => addToCart(item)} 
-                  className="bg-white p-2 rounded-lg shadow border border-gray-200 active:bg-blue-50 flex items-center gap-3 text-left"
+                  className="bg-white p-2 rounded-lg shadow border border-gray-300 active:bg-blue-50 flex items-center gap-3 text-left"
                 >
                   {/* Placeholder para Imagen - Cambia esto por <img> en el futuro */}
-                  <div className="w-16 h-16 bg-gray-200 rounded-md flex items-center justify-center text-gray-400 flex-shrink-0">
+                  <div className="w-16 h-16 bg-gray-300 rounded-md flex items-center justify-center text-gray-600 flex-shrink-0 border border-gray-400">
                     <ImageIcon size={24} />
                   </div>
                   
                   <div className="flex-1">
                     {/* FORZAMOS TEXTO NEGRO PARA QUE SE LEA */}
-                    <div className="font-bold text-gray-900 text-lg leading-tight">{item.name}</div>
-                    <div className="text-gray-600 text-sm font-medium">{item.price.toFixed(2)}€</div>
+                    <div className="font-black text-black text-lg leading-tight">{item.name}</div>
+                    <div className="text-black text-sm font-bold mt-1">{item.price.toFixed(2)}€</div>
                   </div>
-                  <div className="bg-blue-50 p-2 rounded-full text-blue-600">
+                  <div className="bg-blue-100 p-2 rounded-full text-blue-800 border border-blue-200">
                     <Plus size={20}/>
                   </div>
                 </button>
@@ -243,25 +247,27 @@ const WaiterInterface = ({ user }) => {
         ) : (
           <div className="space-y-4">
             {activeOrders.sort((a,b) => b.timestamp?.seconds - a.timestamp?.seconds).map(order => (
-              <div key={order.id} className="bg-white p-4 rounded-lg shadow border">
+              <div key={order.id} className="bg-white p-4 rounded-lg shadow border border-gray-200">
                 <div className="flex justify-between items-start mb-2">
-                  <span className="font-bold text-lg text-gray-900">Mesa {order.table}</span>
-                  <span className={`px-2 py-1 rounded text-xs font-bold uppercase 
-                    ${order.status === ORDER_STATUS.READY ? 'bg-green-100 text-green-800 animate-pulse' : 'bg-gray-100 text-gray-800'}
-                    ${order.status === ORDER_STATUS.DELIVERED ? 'bg-gray-200 text-gray-500' : ''}
+                  <span className="font-bold text-lg text-black">Mesa {order.table}</span>
+                  <span className={`px-2 py-1 rounded text-xs font-bold uppercase border border-gray-200 
+                    ${order.status === ORDER_STATUS.READY ? 'bg-green-100 text-green-900 animate-pulse' : 'bg-gray-100 text-black'}
+                    ${order.status === ORDER_STATUS.DELIVERED ? 'bg-gray-200 text-gray-600' : ''}
                   `}>
                     {order.status}
                   </span>
                 </div>
-                <ul className="text-sm text-gray-800 mb-3">{order.items.map((it, idx) => <li key={idx}>{it.qty}x {it.name}</li>)}</ul>
+                <ul className="text-sm text-black mb-3 font-medium">
+                  {order.items.map((it, idx) => <li key={idx}>{it.qty}x {it.name}</li>)}
+                </ul>
                 <div className="flex justify-end gap-2">
                   {order.status === ORDER_STATUS.READY && (
-                    <button onClick={() => markDelivered(order.id)} className="bg-green-600 text-white px-3 py-2 rounded font-bold shadow-lg animate-bounce">
+                    <button onClick={() => markDelivered(order.id)} className="bg-green-600 text-white px-3 py-2 rounded font-bold shadow-lg animate-bounce border border-green-700">
                       ¡SERVIR!
                     </button>
                   )}
                   {order.status === ORDER_STATUS.DELIVERED && (
-                    <span className="text-gray-500 text-sm italic py-2">Esperando cobro...</span>
+                    <span className="text-gray-600 text-sm italic py-2 font-medium">Esperando cobro...</span>
                   )}
                 </div>
               </div>
@@ -271,24 +277,23 @@ const WaiterInterface = ({ user }) => {
       </div>
 
       {activeTab === 'menu' && cart.length > 0 && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow p-4 z-50">
-          <div className="mb-3 max-h-48 overflow-auto">
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-300 shadow-2xl p-4 z-50">
+          <div className="mb-3 max-h-48 overflow-auto bg-white">
             {cart.map(item => (
-              <div key={item.id} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
-                {/* FORZAMOS TEXTO OSCURO AQUI TAMBIEN */}
-                <span className="text-base font-medium text-gray-900">{item.name}</span>
+              <div key={item.id} className="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
+                <span className="text-base font-bold text-black">{item.name}</span>
                 <div className="flex items-center gap-2">
-                  <button onClick={() => updateQty(item.id, -1)} className="p-1 bg-gray-200 rounded text-gray-800"><Minus size={16}/></button>
-                  <span className="text-base font-bold w-6 text-center text-gray-900">{item.qty}</span>
-                  <button onClick={() => updateQty(item.id, 1)} className="p-1 bg-gray-200 rounded text-gray-800"><Plus size={16}/></button>
-                  <button onClick={() => removeFromCart(item.id)} className="p-1 text-red-500 ml-2"><Trash2 size={18}/></button>
+                  <button onClick={() => updateQty(item.id, -1)} className="p-1 bg-gray-200 rounded text-black border border-gray-300"><Minus size={16}/></button>
+                  <span className="text-base font-black w-6 text-center text-black">{item.qty}</span>
+                  <button onClick={() => updateQty(item.id, 1)} className="p-1 bg-gray-200 rounded text-black border border-gray-300"><Plus size={16}/></button>
+                  <button onClick={() => removeFromCart(item.id)} className="p-1 text-red-600 ml-2"><Trash2 size={18}/></button>
                 </div>
               </div>
             ))}
           </div>
-          <div className="flex gap-4 items-center pt-2">
-            <div className="text-2xl font-bold text-gray-900">{cartTotal.toFixed(2)}€</div>
-            <button onClick={sendOrder} disabled={submitting} className="flex-1 bg-green-600 text-white py-3 rounded-lg font-bold shadow text-lg disabled:opacity-50">
+          <div className="flex gap-4 items-center pt-2 border-t border-gray-100">
+            <div className="text-2xl font-black text-black">{cartTotal.toFixed(2)}€</div>
+            <button onClick={sendOrder} disabled={submitting} className="flex-1 bg-green-600 text-white py-3 rounded-lg font-bold shadow text-lg disabled:opacity-50 border border-green-700">
               {submitting ? '...' : 'ENVIAR A COCINA'}
             </button>
           </div>
@@ -391,6 +396,7 @@ const AdminInterface = ({ user }) => {
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-3xl font-bold text-gray-800 flex items-center gap-2"><LayoutDashboard /> Panel de Caja</h2>
+          <span className="text-xs font-mono bg-red-500 text-white px-2 py-1 rounded">v2.0</span>
         </div>
 
         {/* Sección Crítica: Comandas Abiertas */}
@@ -403,7 +409,7 @@ const AdminInterface = ({ user }) => {
               <div 
                 key={order.id} 
                 onClick={() => setSelectedOrder(order)}
-                className="bg-white border-l-4 border-blue-500 rounded-lg shadow-md p-4 cursor-pointer hover:shadow-xl hover:scale-105 transition-all group"
+                className="bg-white border-l-4 border-blue-500 rounded-lg shadow-md p-4 cursor-pointer hover:shadow-xl hover:scale-105 transition-all group border border-gray-200"
               >
                 <div className="flex justify-between items-start mb-3">
                   <div>
@@ -420,13 +426,13 @@ const AdminInterface = ({ user }) => {
                   </span>
                 </div>
                 
-                <div className="text-gray-500 text-sm mb-4">
+                <div className="text-gray-600 font-medium text-sm mb-4">
                   {order.items.length} productos
                 </div>
 
-                <div className="flex justify-between items-center border-t pt-2">
-                  <span className="text-xl font-bold text-gray-900">{order.total?.toFixed(2)}€</span>
-                  <span className="text-blue-600 text-sm font-medium flex items-center gap-1">
+                <div className="flex justify-between items-center border-t border-gray-100 pt-2">
+                  <span className="text-xl font-black text-gray-900">{order.total?.toFixed(2)}€</span>
+                  <span className="text-blue-600 text-sm font-bold flex items-center gap-1">
                     <Eye size={16}/> Ver Detalle
                   </span>
                 </div>
@@ -441,15 +447,15 @@ const AdminInterface = ({ user }) => {
         </div>
 
         {/* Resumen Histórico */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 border-t pt-8">
-          <div className="bg-white p-6 rounded shadow"><h3 className="text-gray-500 text-sm font-bold uppercase">Caja del Día (Cerrada)</h3><p className="text-3xl font-bold text-emerald-600">{totalSales.toFixed(2)}€</p></div>
-          <div className="bg-white p-6 rounded shadow"><h3 className="text-gray-500 text-sm font-bold uppercase">Mesas Activas</h3><p className="text-3xl font-bold text-blue-600">{activeOrders.length}</p></div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 border-t border-gray-300 pt-8">
+          <div className="bg-white p-6 rounded shadow border border-gray-200"><h3 className="text-gray-500 text-sm font-bold uppercase">Caja del Día (Cerrada)</h3><p className="text-3xl font-bold text-emerald-600">{totalSales.toFixed(2)}€</p></div>
+          <div className="bg-white p-6 rounded shadow border border-gray-200"><h3 className="text-gray-500 text-sm font-bold uppercase">Mesas Activas</h3><p className="text-3xl font-bold text-blue-600">{activeOrders.length}</p></div>
         </div>
 
         {/* ZONA PELIGROSA */}
         <div className="mt-12 p-6 bg-red-50 border border-red-200 rounded-xl">
           <h3 className="text-red-800 font-bold flex items-center gap-2 mb-2"><AlertTriangle/> ZONA DE PELIGRO</h3>
-          <p className="text-red-600 text-sm mb-4">Estas acciones son irreversibles. Úsalas solo al cerrar el local.</p>
+          <p className="text-red-600 text-sm mb-4 font-medium">Estas acciones son irreversibles. Úsalas solo al cerrar el local.</p>
           <button 
             onClick={resetDay}
             className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded shadow flex items-center gap-2"
