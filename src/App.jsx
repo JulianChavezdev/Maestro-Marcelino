@@ -13,7 +13,7 @@ import {
   CheckSquare, ArrowRightCircle, X, Eye
 } from 'lucide-react';
 
-// --- CONFIGURACIÓN FIREBASE (FIXED PARA LOCALHOST) ---
+// --- CONFIGURACIÓN FIREBASE ---
 const firebaseConfig = {
   apiKey: "AIzaSyBEExNnqpZqiA3lXuMd5dLS754E5OmBt50",
   authDomain: "maestromarcelino.firebaseapp.com",
@@ -28,8 +28,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-
-const appId = "maestromarcelino"; 
 
 // Menú
 const MENU_ITEMS = [
@@ -151,7 +149,8 @@ const WaiterInterface = ({ user }) => {
 
   useEffect(() => {
     if (!user) return;
-    const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'orders'));
+    // AHORA USAMOS UNA COLECCIÓN SIMPLE 'orders'
+    const q = query(collection(db, 'orders'));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const orders = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setActiveOrders(orders.filter(o => o.status !== ORDER_STATUS.PAID));
@@ -177,7 +176,7 @@ const WaiterInterface = ({ user }) => {
     if (!table || cart.length === 0) return alert('Indica mesa y productos');
     setSubmitting(true);
     try {
-      await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'orders'), {
+      await addDoc(collection(db, 'orders'), {
         table,
         items: cart,
         status: ORDER_STATUS.PENDING,
@@ -196,7 +195,7 @@ const WaiterInterface = ({ user }) => {
   };
 
   const markDelivered = async (orderId) => {
-    await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'orders', orderId), { status: ORDER_STATUS.DELIVERED });
+    await updateDoc(doc(db, 'orders', orderId), { status: ORDER_STATUS.DELIVERED });
   };
 
   const cartTotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
@@ -288,7 +287,8 @@ const KitchenInterface = ({ user }) => {
 
   useEffect(() => {
     if (!user) return;
-    const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'orders'));
+    // AHORA USAMOS UNA COLECCIÓN SIMPLE 'orders'
+    const q = query(collection(db, 'orders'));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const all = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setOrders(all.filter(o => [ORDER_STATUS.PENDING].includes(o.status)).sort((a, b) => a.timestamp?.seconds - b.timestamp?.seconds));
@@ -296,7 +296,7 @@ const KitchenInterface = ({ user }) => {
     return () => unsubscribe();
   }, [user]);
 
-  const markReady = async (id) => await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'orders', id), { status: ORDER_STATUS.READY });
+  const markReady = async (id) => await updateDoc(doc(db, 'orders', id), { status: ORDER_STATUS.READY });
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-2">
@@ -339,7 +339,8 @@ const AdminInterface = ({ user }) => {
 
   useEffect(() => {
     if (!user) return;
-    const unsubscribe = onSnapshot(query(collection(db, 'artifacts', appId, 'public', 'data', 'orders')), (snapshot) => {
+    // AHORA USAMOS UNA COLECCIÓN SIMPLE 'orders'
+    const unsubscribe = onSnapshot(query(collection(db, 'orders')), (snapshot) => {
       setOrders(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
     });
     return () => unsubscribe();
@@ -350,7 +351,7 @@ const AdminInterface = ({ user }) => {
 
   const closeOrder = async (orderId) => {
     if(!confirm('¿Seguro que ya has anotado esto en el ordenador principal? Esta comanda desaparecerá de la lista activa.')) return;
-    await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'orders', orderId), { status: ORDER_STATUS.PAID });
+    await updateDoc(doc(db, 'orders', orderId), { status: ORDER_STATUS.PAID });
     setSelectedOrder(null);
   };
 
