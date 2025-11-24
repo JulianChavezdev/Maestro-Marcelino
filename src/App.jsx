@@ -41,7 +41,7 @@ const MENU_ITEMS = [
   { id: 8, name: 'Entrecot', price: 18.00, category: 'Principal' },
   { id: 9, name: 'Tarta de Queso', price: 5.50, category: 'Postres' },
   { id: 10, name: 'Café', price: 1.50, category: 'Bebidas' },
-  { id: 12, name: 'Caña', price: 1.80, category: 'Bebidas' }
+  { id: 11, name: 'Caña', price: 1.80, category: 'Bebidas' }
 ];
 
 const ORDER_STATUS = {
