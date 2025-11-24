@@ -125,7 +125,7 @@ const RoleSelector = ({ onSelectRole }) => (
   <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 p-4">
     <div className="max-w-md w-full bg-gray-800 rounded-xl shadow-2xl p-8 border border-gray-700">
       <h1 className="text-3xl font-bold text-white text-center mb-2">Restaurante Marcelino</h1>
-      <div className="text-center mb-8 text-red-400 font-mono font-bold text-sm border border-red-500 inline-block px-2 rounded">v2.0 - VERSIÓN NUEVA</div>
+      <div className="text-center mb-8 text-green-400 font-mono font-bold text-sm border border-green-500 inline-block px-2 rounded">v3.0 - FIX VERCEL</div>
       
       <div className="space-y-4">
         <button onClick={() => onSelectRole('waiter')} className="w-full flex items-center justify-center gap-3 p-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold text-lg">
@@ -206,7 +206,7 @@ const WaiterInterface = ({ user }) => {
       <div className="bg-blue-600 text-white p-4 flex justify-between items-center shadow-md">
         <div className="flex flex-col">
           <h2 className="font-bold text-lg">Camarero</h2>
-          <span className="text-xs font-mono bg-red-500 px-1 rounded w-fit">v2.0</span>
+          <span className="text-xs font-mono bg-green-500 px-1 rounded w-fit">v3.0</span>
         </div>
         <div className="flex gap-2">
           <button onClick={() => setActiveTab('menu')} className={`px-3 py-1 rounded ${activeTab === 'menu' ? 'bg-white text-blue-600' : 'bg-blue-500'}`}>Carta</button>
@@ -227,13 +227,11 @@ const WaiterInterface = ({ user }) => {
                   onClick={() => addToCart(item)} 
                   className="bg-white p-2 rounded-lg shadow border border-gray-300 active:bg-blue-50 flex items-center gap-3 text-left"
                 >
-                  {/* Placeholder para Imagen - Cambia esto por <img> en el futuro */}
                   <div className="w-16 h-16 bg-gray-300 rounded-md flex items-center justify-center text-gray-600 flex-shrink-0 border border-gray-400">
                     <ImageIcon size={24} />
                   </div>
                   
                   <div className="flex-1">
-                    {/* FORZAMOS TEXTO NEGRO PARA QUE SE LEA */}
                     <div className="font-black text-black text-lg leading-tight">{item.name}</div>
                     <div className="text-black text-sm font-bold mt-1">{item.price.toFixed(2)}€</div>
                   </div>
@@ -396,7 +394,7 @@ const AdminInterface = ({ user }) => {
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-3xl font-bold text-gray-800 flex items-center gap-2"><LayoutDashboard /> Panel de Caja</h2>
-          <span className="text-xs font-mono bg-red-500 text-white px-2 py-1 rounded">v2.0</span>
+          <span className="text-xs font-mono bg-green-500 text-white px-2 py-1 rounded">v3.0</span>
         </div>
 
         {/* Sección Crítica: Comandas Abiertas */}
