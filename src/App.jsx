@@ -29,7 +29,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Menú (Estructura lista para imágenes futuras)
+// Menú
 const MENU_ITEMS = [
   { id: 1, name: 'Cerveza', price: 2.50, category: 'Bebidas' },
   { id: 2, name: 'Refresco', price: 2.00, category: 'Bebidas' },
@@ -41,7 +41,6 @@ const MENU_ITEMS = [
   { id: 8, name: 'Entrecot', price: 18.00, category: 'Principal' },
   { id: 9, name: 'Tarta de Queso', price: 5.50, category: 'Postres' },
   { id: 10, name: 'Café', price: 1.50, category: 'Bebidas' },
-  { id: 11, name: 'Cdafé', price: 11.50, category: 'Bedbidas' },
 ];
 
 const ORDER_STATUS = {
@@ -126,7 +125,7 @@ const RoleSelector = ({ onSelectRole }) => (
   <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 p-4">
     <div className="max-w-md w-full bg-gray-800 rounded-xl shadow-2xl p-8 border border-gray-700">
       <h1 className="text-3xl font-bold text-white text-center mb-2">Restaurante Marcelino</h1>
-      <div className="text-center mb-8 text-green-400 font-mono font-bold text-sm border border-green-500 inline-block px-2 rounded">v3.0 - FIX VERCEL</div>
+      <div className="text-center mb-8 text-green-400 font-mono font-bold text-sm border border-green-500 inline-block px-2 rounded">v3.0 - VERCEL FIX</div>
       
       <div className="space-y-4">
         <button onClick={() => onSelectRole('waiter')} className="w-full flex items-center justify-center gap-3 p-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold text-lg">
